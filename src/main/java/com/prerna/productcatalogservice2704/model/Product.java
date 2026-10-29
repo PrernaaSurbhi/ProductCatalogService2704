@@ -2,6 +2,7 @@ package com.prerna.productcatalogservice2704.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.prerna.productcatalogservice2704.dtos.CategoryDTO;
+import com.prerna.productcatalogservice2704.dtos.FakestoreProductDto;
 import com.prerna.productcatalogservice2704.dtos.ProductDTO;
 import org.springframework.http.ResponseEntity;
 
@@ -31,6 +32,20 @@ public class Product extends BaseModel{
 
     }
 
+    public FakestoreProductDto toFakestoreProductDto(){
+         /*
+        This method is used to convert the Product object to a FakestoreProductDto object.
+         */
+        FakestoreProductDto fakestoreProductDto = new FakestoreProductDto();
+        fakestoreProductDto.setId(this.getId());
+        fakestoreProductDto.setTitle(this.name);
+        fakestoreProductDto.setDescription(this.description);
+        fakestoreProductDto.setPrice(this.price);
+        fakestoreProductDto.setImage(this.imageUrl);
+        fakestoreProductDto.setCategory(this.category.getName());
+
+        return fakestoreProductDto;
+    }
 
     public Double getPrice() {
         return price;

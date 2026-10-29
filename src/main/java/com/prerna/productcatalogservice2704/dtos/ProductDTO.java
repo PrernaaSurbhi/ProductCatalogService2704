@@ -12,7 +12,7 @@ public class ProductDTO {
     private String imageUrl;
     private CategoryDTO category;
 
-    public Product convertToProduct() {
+    public Product toProduct() {
         Product product = new Product();
         product.setName(this.name);
         product.setDescription(this.description);

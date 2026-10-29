@@ -15,4 +15,6 @@ public interface IProductService {
 
     ProductDTO createProduct(@RequestBody ProductDTO product);
 
+    Product replaceProduct(Product newProduct, Long id);
+
 }

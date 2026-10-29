@@ -5,8 +5,6 @@ import com.prerna.productcatalogservice2704.model.Product;
 import com.prerna.productcatalogservice2704.services.IProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,4 +49,21 @@ public class ProductController {
 
         return productDTOS;
     }
+
+
+    @PutMapping("/products/{id}")
+    public ProductDTO replaceProduct(@PathVariable("id") Long productId,
+                                     @RequestBody ProductDTO productDTO){
+
+        Product product = productDTO.toProduct();
+
+        Product response = productService.replaceProduct(
+                product,
+                productId
+        );
+
+        return response.toProductDto();
+
+    }
+
 }
