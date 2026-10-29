@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("fakestore")
@@ -20,11 +22,30 @@ public class FakestoreProductService implements IProductService{
     // GET
     @Override
     public List<Product> getAllProduct() {
-        return null;
+
+        List<Product> productList = new ArrayList<>();
+
+        ResponseEntity<FakestoreProductDto[]> fakeStoreProductDtoList = restTemplate.getForEntity(
+                "https://fakestoreapi.com/products",
+                FakestoreProductDto[].class
+        );
+
+        if(fakeStoreProductDtoList.getBody() != null
+                && fakeStoreProductDtoList.getStatusCode().equals(HttpStatusCode.valueOf(200))){
+
+            for(FakestoreProductDto fakestoreProductDto : fakeStoreProductDtoList.getBody()){
+                productList.add(fakestoreProductDto.toProduct());
+            }
+
+            return productList;
+        }
+
+        return productList;
     }
 
     @Override
     public Product getProductById(Long id) {
+
         ResponseEntity<FakestoreProductDto> fakestoreProductDto = restTemplate.getForEntity(
                 "https://fakestoreapi.com/products/{id}",
                 FakestoreProductDto.class,

@@ -6,6 +6,10 @@ import com.prerna.productcatalogservice2704.services.IProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @RestController
 public class ProductController {
@@ -17,7 +21,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    ResponseEntity<ProductDTO> getProductById(@PathVariable("id") Long id){
+    ResponseEntity<ProductDTO> getAllProductById(@PathVariable("id") Long id){
 
         Product product =  productService.getProductById(id);
         if (product == null) {
@@ -30,5 +34,21 @@ public class ProductController {
     @PostMapping("/product")
     public ProductDTO createProduct(@RequestBody ProductDTO product){
         return null;
+    }
+
+
+
+    @GetMapping("/products")
+    List<ProductDTO>  getAllProduct(){
+
+        List<Product> products =  productService.getAllProduct();
+
+        List<ProductDTO> productDTOS = new ArrayList<>();
+
+        for(Product product: products){
+            productDTOS.add(product.toProductDto());
+        }
+
+        return productDTOS;
     }
 }
