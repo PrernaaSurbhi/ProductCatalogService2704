@@ -1,9 +1,16 @@
 package com.prerna.productcatalogservice2704.model;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+
 import java.util.Date;
 
 // we are making this class as abstract , since we don't want to create object of this class .
+@MappedSuperclass
 public abstract class BaseModel {
+    @Id
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
     private Date createdAt; //store data in epoch format-> HW
     private Date lastUpdatedAt;

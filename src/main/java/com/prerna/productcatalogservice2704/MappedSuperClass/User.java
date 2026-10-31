@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.util.UUID;
 
-@Entity(name = "tbc_user")
 @MappedSuperclass
 public abstract class User {
     private String name;

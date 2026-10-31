@@ -4,13 +4,18 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.prerna.productcatalogservice2704.dtos.CategoryDTO;
 import com.prerna.productcatalogservice2704.dtos.FakestoreProductDto;
 import com.prerna.productcatalogservice2704.dtos.ProductDTO;
-import org.springframework.http.ResponseEntity;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 
+@Entity
 public class Product extends BaseModel{
     private String name;
     private String description;
     private Double price;
     private String imageUrl;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JsonManagedReference
     private Category category;
 
 
