@@ -1,8 +1,11 @@
 package com.prerna.productcatalogservice2704.controller;
 
 import com.prerna.productcatalogservice2704.dtos.ProductDTO;
+import com.prerna.productcatalogservice2704.exceptions.ProductNotExistException;
 import com.prerna.productcatalogservice2704.model.Product;
 import com.prerna.productcatalogservice2704.services.IProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
@@ -12,14 +15,12 @@ import java.util.List;
 @RestController
 public class ProductController {
 
-    IProductService productService;
-
-    public ProductController(IProductService iProductService){
-        this.productService = iProductService;
-    }
+    @Autowired
+    @Qualifier("storageProductService")
+    private IProductService productService;
 
     @GetMapping("/products/{id}")
-    ResponseEntity<ProductDTO> getAllProductById(@PathVariable("id") Long id){
+    ResponseEntity<ProductDTO> getAllProductById(@PathVariable("id") Long id) throws ProductNotExistException {
 
         Product product =  productService.getProductById(id);
         if (product == null) {
@@ -30,11 +31,15 @@ public class ProductController {
     }
 
     @PostMapping("/product")
-    public ProductDTO createProduct(@RequestBody ProductDTO product){
-        return null;
+    public ProductDTO createProduct(@RequestBody ProductDTO productDTO){
+
+        Product product = productDTO.toProduct();
+        return productService.createProduct(product).toProductDto();
     }
 
-
+    Boolean deleteProductById(Long id){
+        return false ;
+    }
 
     @GetMapping("/products")
     List<ProductDTO>  getAllProduct(){

@@ -69,7 +69,7 @@ public class FakeStoreProductService implements IProductService {
     }
 
     @Override
-    public ProductDTO createProduct(ProductDTO product) {
+    public Product createProduct(Product product) {
         return null;
     }
 
@@ -92,6 +92,11 @@ public class FakeStoreProductService implements IProductService {
 
         }
 
+        return null;
+    }
+
+    @Override
+    public Boolean deleteProductById(Long id) {
         return null;
     }
 
